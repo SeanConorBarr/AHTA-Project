@@ -1,0 +1,215 @@
+---
+title: 'Overview Datasets Project'
+author: 
+- Louis Coussement
+date: 2020-2021
+output:
+  pdf_document:
+    dev: png
+    toc: true
+  html_document:
+    df_print: paged
+    toc: true
+header-includes: \setlength{\emergencystretch}{3em}
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.align = 'center')
+knitr::opts_chunk$set(out.width = '60%')
+knitr::opts_chunk$set(fig.width=12, fig.height=8)
+
+library("ArrayExpress")
+library("arrayQualityMetrics")
+library("ggplot2")
+library("huex10sttranscriptcluster.db")
+library("limma")
+library("oligo")
+library("siggenes")
+library("affy")
+library("pd.huex.1.0.st.v2")
+library("RSQLite")
+library("DBI")
+library("htmltools")
+library("biomaRt")
+library("tximport")
+library("wateRmelon")
+```
+
+# Purpose of this overview
+
+The purpose of this overview is to present a clear and complete summary of the datasets you will be analysing for your project, which is useful to identify and solve problems early on. Moreover, part of the results can be re-used for your final report. Note that results presented here are not necessarily final: you may still opt to perform modifications to your preprocessing pipeline, design (samples included) etc without the need to update this temporary overview. 
+
+For this assignment we ask you to do the following:
+
+- Present some general info on your datasets
+- Present quality control (QC) on your raw sequencing files
+- Load in the data and present the intensity/count/pseudocount data
+
+If you prefer to align your sequencing data yourself (which is highly appreciated), you will already need to do so for this homework. However, since you already have to present QC results for the raw sequencing data, alignment is only a small additional effort (highly similar to what we performed in the practical session).
+
+In order to complete this task you can find a R markdown template via Ufora and also a filled out example (https://ufora.ugent.be/d2l/le/content/442070/Home). Note that for the filled out example datasets are not chosen around an matching topic, as should of course be the case for your project.
+
+# Project assignment
+
+You can find the project assignment via Ufora (https://ufora.ugent.be/d2l/le/content/442070/Home).
+
+# Group info
+
+Group number:
+
+Group members: - 
+
+```{r }
+table_general_info <- rbind(c("MicroArray","RNA seq","RNA seq","ChipSeq"),
+c(6,49,18,8),
+c(6,49,18,8))
+colnames(table_general_info) <- c("E-GEOD-30994","E-MTAB-9930","E-MTAB-9831","E-GEOD-72690")
+rownames(table_general_info) <- c("Accesion ID","Number of Samples (original)",
+"Number of Samples (analysed)")
+
+
+
+# Link to data for Agilent MicroArray
+# https://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-30994/
+# Link to data for RNA seq
+# https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-9930/
+# Link to data for RNA seq
+# https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-9831
+# Link to data for Chipseq
+# https://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-72690
+
+
+
+print(table_general_info)
+```
+
+# Microarray data
+
+## General info
+cDNA microarray expression profiling between benign prostate hypertrophy and prostate cancer.
+
+
+## Intensity values
+
+Read in your microarray data and display the head and dimensions of the intensity value matrix.
+
+```{r}
+id <- "E-GEOD-30994"
+sdrf <- read.delim("microarray/E-GEOD-30994.sdrf.txt", check.names = FALSE, stringsAsFactors = FALSE)
+setwd("microarray/E-GEOD-30994/")
+ma_rawdata <- read.maimages(sdrf[,"Array Data File"], source="agilent", green.only = TRUE)
+head(ma_rawdata)
+```
+
+## Annotation
+
+Provide basic sample annotation, including the phenotype of interest and relevant other features (e.g. confounders). Note that this statement is not final: if during analysis you would drop or add a confounder or comparison, this is no problem. Just try do clearly define the initial goal of your analysis.
+
+
+
+```{r}
+(phenotypes <- sdrf[,c("Array Data File", "Characteristics [case]")])
+```
+
+# Infinium data
+
+## General info
+
+
+
+## Intensity values
+
+Read in your methylation data and display the head and dimensions of your beta and M values.
+
+```{r}
+
+```
+
+## Annotation
+
+Provide basic sample annotation, including the phenotype of interest and relevant other features (e.g. confounders). Note that this statement is not final: if during analysis you would drop or add a confounder or comparison, this is no problem. Just try do clearly define the initial goal of your analysis.
+
+
+
+
+```{r}
+
+```
+
+
+# Sequencing data
+
+## General info
+
+
+
+
+## Quality control on fastQ files
+
+Add the multiqc report using `htmltools::includeHTML`. Hint: you can remove the navigation bar on the left by opening the html file > closing the bar > saving the html file. This will remove the indentation in your final html file. In case you start from count data, we still ask you to download (a representative part) of the fastq data to obtain a first impression of the data quality.
+
+```{r, echo=FALSE}
+
+```
+
+## Mapping statistics
+
+When starting from the count data, provide some mapping statistics if available (these can typically be found in the paper for which the data was originally published). If you performed the mapping yourself and saved your kallisto output as a log file, mapping statistics are typically included in your multiqc output (and can be displayed under the previous section).
+
+## (Pseudo)Count table
+
+Read in your count data or combine your kallisto output to combine your pseudocount data (via tximport) and display the head and dimensions of your count data object.
+
+```{r}
+
+```
+
+## Annotation
+
+Provide basic sample annotation, including the phenotype of interest and relevant other features (e.g. confounders). Note that this statement is not final: if during analysis you would drop or add a confounder or comparison, this is no problem. Just try do clearly define the initial goal of your analysis.
+
+
+
+
+```{r}
+
+
+```
+
+# ChIPseq data
+
+## General info
+
+
+
+
+## Quality control on fastQ files
+
+Add the multiqc report using `htmltools::includeHTML`. Hint: you can remove the navigation bar on the left by opening the html file > closing the bar > saving the html file. This will remove the indentation in your final html file. In case you start from count data, we still ask you to download (a representative part) of the fastq data to obtain a first impression of the data quality.
+
+```{r, echo=FALSE}
+
+```
+
+## Mapping statistics
+
+When starting from the bam files, provide some mapping statistics if available (these can typically be found in the paper for which the data was originally published). If you performed the mapping yourself and saved your kallisto output as a log file, mapping statistics are typically included in your multiqc output (and can be displayed under the previous section).
+
+## Peak data
+
+Read in your peak data (output macs2) and display the head and dimensions of your data object.
+
+```{r}
+
+```
+
+## Annotation
+
+Provide basic sample annotation, including the phenotype of interest and relevant other features (e.g. confounders). Note that this statement is not final: if during analysis you would drop or add a confounder or comparison, this is no problem. Just try do clearly define the initial goal of your analysis.
+
+
+
+```{r}
+
+
+```
