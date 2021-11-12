@@ -55,9 +55,9 @@ You can find the project assignment via Ufora (https://ufora.ugent.be/d2l/le/con
 
 # Group info
 
-Group number:
+Group number: 1
 
-Group members: - 
+Group members: - Sean Barr, Halil Bora Koraaslan
 
 ```{r }
 table_general_info <- rbind(c("MicroArray","RNA seq","RNA seq","ChipSeq"),
@@ -71,10 +71,17 @@ rownames(table_general_info) <- c("Accesion ID","Number of Samples (original)",
 
 # Link to data for Agilent MicroArray
 # https://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-30994/
+# Link to data for Affymetrix MicroArray (European Americans)
+# https://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-71783
+# Link to data for Affymetrix MicroArray (African Americans)
+# https://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-71781
+
+
 # Link to data for RNA seq
 # https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-9930/
 # Link to data for RNA seq
 # https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-9831
+
 # Link to data for Chipseq
 # https://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-72690
 
@@ -111,18 +118,18 @@ Provide basic sample annotation, including the phenotype of interest and relevan
 (phenotypes <- sdrf[,c("Array Data File", "Characteristics [case]")])
 ```
 
-# Infinium data
-
-## General info
-
-
+# Affymetrix data 71783
 
 ## Intensity values
 
-Read in your methylation data and display the head and dimensions of your beta and M values.
-
 ```{r}
+id <- "E-GEOD-71783"
+exonCELs <-list.celfiles("C:/workspace/HighThroughput/Project/AHTA-Project/GEOD-71783/")
+data.raw <-read.celfiles(paste(rep("C:/workspace/HighThroughput/Project/AHTA-Project/GEOD-71783/",length(exonCELs)),exonCELs,sep=""))
 
+dim(exprs(data.raw))
+
+head(exprs(data.raw))
 ```
 
 ## Annotation
@@ -130,12 +137,34 @@ Read in your methylation data and display the head and dimensions of your beta a
 Provide basic sample annotation, including the phenotype of interest and relevant other features (e.g. confounders). Note that this statement is not final: if during analysis you would drop or add a confounder or comparison, this is no problem. Just try do clearly define the initial goal of your analysis.
 
 
+```{r}
+sdrf <- read.delim("C:/workspace/HighThroughput/Project/AHTA-Project/GEOD-71783/E-GEOD-71783.sdrf.txt")
+print(sdrf[,c("Source.Name","Comment..Sample_title.","Array.Design.REF")])
+```
+
+# Affymetrix data 71781
+
+## Intensity values
+
+```{r}
+id <- "E-GEOD-71781"
+exonCELs <-list.celfiles("./GEOD-71781/")
+data.raw <-read.celfiles(paste(rep("./GEOD-71781/",length(exonCELs)),exonCELs,sep=""))
+
+dim(exprs(data.raw))
+
+head(exprs(data.raw))
+```
+
+## Annotation
+
+Provide basic sample annotation, including the phenotype of interest and relevant other features (e.g. confounders). Note that this statement is not final: if during analysis you would drop or add a confounder or comparison, this is no problem. Just try do clearly define the initial goal of your analysis.
 
 
 ```{r}
-
+sdrf <- read.delim("C:/workspace/HighThroughput/Project/AHTA-Project/GEOD-71781/E-GEOD-71781.sdrf.txt")
+print(sdrf[,c("Source.Name","Comment..Sample_title.","Array.Design.REF")])
 ```
-
 
 # Sequencing data
 
