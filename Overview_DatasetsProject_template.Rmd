@@ -60,9 +60,9 @@ Group number: 1
 Group members: - Sean Barr, Halil Bora Koraaslan
 
 ```{r }
-table_general_info <- rbind(c("MicroArray","RNA seq","RNA seq","ChipSeq"),
-c(6,49,18,8),
-c(6,49,18,8))
+table_general_info <- rbind(c("MicroArray","Affymetrix MicroArray 1","Affymetrix MicroArray 2","ChipSeq"),
+c(6,30,40,8),
+c(6,30,40,8))
 colnames(table_general_info) <- c("E-GEOD-30994","E-MTAB-9930","E-MTAB-9831","E-GEOD-72690")
 rownames(table_general_info) <- c("Accesion ID","Number of Samples (original)",
 "Number of Samples (analysed)")
@@ -102,10 +102,12 @@ Read in your microarray data and display the head and dimensions of the intensit
 
 ```{r}
 id <- "E-GEOD-30994"
-sdrf <- read.delim("microarray/E-GEOD-30994.sdrf.txt", check.names = FALSE, stringsAsFactors = FALSE)
-setwd("microarray/E-GEOD-30994/")
+sdrf <- read.delim("./microarray/GEOD-30994/E-GEOD-30994.sdrf.txt", check.names = FALSE, stringsAsFactors = FALSE)
+orig <- getwd()
+setwd("./microarray/ GEOD-30994/")
 ma_rawdata <- read.maimages(sdrf[,"Array Data File"], source="agilent", green.only = TRUE)
 head(ma_rawdata)
+setwd(orig)
 ```
 
 ## Annotation
@@ -124,8 +126,8 @@ Provide basic sample annotation, including the phenotype of interest and relevan
 
 ```{r}
 id <- "E-GEOD-71783"
-exonCELs <-list.celfiles("./GEOD-71783/")
-data.raw <-read.celfiles(paste(rep("./GEOD-71783/",length(exonCELs)),exonCELs,sep=""))
+inputCELS <-list.celfiles("./microarray/GEOD-71783/")
+data.raw <-read.celfiles(paste(rep("./microarray/GEOD-71783/",length(inputCELS)),inputCELS,sep=""))
 
 dim(exprs(data.raw))
 
@@ -134,11 +136,12 @@ head(exprs(data.raw))
 
 ## Annotation
 
-Provide basic sample annotation, including the phenotype of interest and relevant other features (e.g. confounders). Note that this statement is not final: if during analysis you would drop or add a confounder or comparison, this is no problem. Just try do clearly define the initial goal of your analysis.
+In this data set we have samples from the tumor and healthy tissue surrounding it. All patients had prostate cancer at the time the samples were taken. We will be investigating the differential expression between the tumor and healthy tissues.
+We will also be comparing the differences between European American and African American patients to see what the differences are in the different groups (This will be compared between data set E-GEOD-71781 and E-GEOD-71783)
 
 
 ```{r}
-sdrf <- read.delim("./GEOD-71783/E-GEOD-71783.sdrf.txt")
+sdrf <- read.delim("./microarray/GEOD-71783/E-GEOD-71783.sdrf.txt")
 print(sdrf[,c("Source.Name","Comment..Sample_title.","Array.Design.REF")])
 ```
 
@@ -148,8 +151,8 @@ print(sdrf[,c("Source.Name","Comment..Sample_title.","Array.Design.REF")])
 
 ```{r}
 id <- "E-GEOD-71781"
-exonCELs <-list.celfiles("./GEOD-71781/")
-data.raw <-read.celfiles(paste(rep("./GEOD-71781/",length(exonCELs)),exonCELs,sep=""))
+inputCELS2 <-list.celfiles("./microarray/GEOD-71781/")
+data.raw <-read.celfiles(paste(rep("./microarray/GEOD-71781/",length(inputCELS2)),inputCELS2,sep=""))
 
 dim(exprs(data.raw))
 
@@ -158,11 +161,12 @@ head(exprs(data.raw))
 
 ## Annotation
 
-Provide basic sample annotation, including the phenotype of interest and relevant other features (e.g. confounders). Note that this statement is not final: if during analysis you would drop or add a confounder or comparison, this is no problem. Just try do clearly define the initial goal of your analysis.
+In this data set we have samples from the tumor and healthy tissue surrounding it. All patients had prostate cancer at the time the samples were taken. We will be investigating the differential expression between the tumor and healthy tissues.
+We will also be comparing the differences between European American and African American patients to see what the differences are in the different groups (This will be compared between data set E-GEOD-71781 and E-GEOD-71783)
 
 
 ```{r}
-sdrf <- read.delim("./GEOD-71781/E-GEOD-71781.sdrf.txt")
+sdrf <- read.delim("./microarray/GEOD-71781/E-GEOD-71781.sdrf.txt")
 print(sdrf[,c("Source.Name","Comment..Sample_title.","Array.Design.REF")])
 ```
 
