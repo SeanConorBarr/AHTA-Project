@@ -124,8 +124,8 @@ Provide basic sample annotation, including the phenotype of interest and relevan
 
 ```{r}
 id <- "E-GEOD-71783"
-exonCELs <-list.celfiles("C:/workspace/HighThroughput/Project/AHTA-Project/GEOD-71783/")
-data.raw <-read.celfiles(paste(rep("C:/workspace/HighThroughput/Project/AHTA-Project/GEOD-71783/",length(exonCELs)),exonCELs,sep=""))
+exonCELs <-list.celfiles("./GEOD-71783/")
+data.raw <-read.celfiles(paste(rep("./GEOD-71783/",length(exonCELs)),exonCELs,sep=""))
 
 dim(exprs(data.raw))
 
@@ -138,7 +138,7 @@ Provide basic sample annotation, including the phenotype of interest and relevan
 
 
 ```{r}
-sdrf <- read.delim("C:/workspace/HighThroughput/Project/AHTA-Project/GEOD-71783/E-GEOD-71783.sdrf.txt")
+sdrf <- read.delim("./GEOD-71783/E-GEOD-71783.sdrf.txt")
 print(sdrf[,c("Source.Name","Comment..Sample_title.","Array.Design.REF")])
 ```
 
@@ -162,7 +162,7 @@ Provide basic sample annotation, including the phenotype of interest and relevan
 
 
 ```{r}
-sdrf <- read.delim("C:/workspace/HighThroughput/Project/AHTA-Project/GEOD-71781/E-GEOD-71781.sdrf.txt")
+sdrf <- read.delim("./GEOD-71781/E-GEOD-71781.sdrf.txt")
 print(sdrf[,c("Source.Name","Comment..Sample_title.","Array.Design.REF")])
 ```
 
