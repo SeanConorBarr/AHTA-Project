@@ -61,9 +61,9 @@ Group members: - Sean Barr, Halil Bora Koraaslan
 
 ```{r }
 table_general_info <- rbind(c("MicroArray","Affymetrix MicroArray 1","Affymetrix MicroArray 2","ChipSeq"),
-c(6,30,40,8),
-c(6,30,40,8))
-colnames(table_general_info) <- c("E-GEOD-30994","E-MTAB-9930","E-MTAB-9831","E-GEOD-72690")
+c(6,30,40,24),
+c(6,30,40,10))
+colnames(table_general_info) <- c("E-GEOD-30994","E-MTAB-9930","E-MTAB-9831","PRJNA311373")
 rownames(table_general_info) <- c("Accesion ID","Number of Samples (original)",
 "Number of Samples (analysed)")
 
@@ -75,15 +75,8 @@ rownames(table_general_info) <- c("Accesion ID","Number of Samples (original)",
 # https://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-71783
 # Link to data for Affymetrix MicroArray (African Americans)
 # https://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-71781
-
-
-# Link to data for RNA seq
-# https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-9930/
-# Link to data for RNA seq
-# https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-9831
-
 # Link to data for Chipseq
-# https://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-72690
+# https://www.ebi.ac.uk/ena/browser/view/PRJNA311373
 
 
 
@@ -93,6 +86,7 @@ print(table_general_info)
 # Microarray data
 
 ## General info
+
 cDNA microarray expression profiling between benign prostate hypertrophy and prostate cancer.
 
 
@@ -102,9 +96,9 @@ Read in your microarray data and display the head and dimensions of the intensit
 
 ```{r}
 id <- "E-GEOD-30994"
-sdrf <- read.delim("./microarray/GEOD-30994/E-GEOD-30994.sdrf.txt", check.names = FALSE, stringsAsFactors = FALSE)
+sdrf <- read.delim("./microarray/E-GEOD-30994/E-GEOD-30994.sdrf.txt", check.names = FALSE, stringsAsFactors = FALSE)
 orig <- getwd()
-setwd("./microarray/ GEOD-30994/")
+setwd("./microarray/E-GEOD-30994/")
 ma_rawdata <- read.maimages(sdrf[,"Array Data File"], source="agilent", green.only = TRUE)
 head(ma_rawdata)
 setwd(orig)
@@ -213,6 +207,7 @@ Provide basic sample annotation, including the phenotype of interest and relevan
 
 ## General info
 
+This ChIP-seq dataset includes H3K4me2 and H3K9me2 ChIP-seq data in 4 different conditions, siRNA for LSD1 and Luciferase, SP52509 inhibition of LSD1 and a mock treatment.
 
 
 
@@ -220,8 +215,11 @@ Provide basic sample annotation, including the phenotype of interest and relevan
 
 Add the multiqc report using `htmltools::includeHTML`. Hint: you can remove the navigation bar on the left by opening the html file > closing the bar > saving the html file. This will remove the indentation in your final html file. In case you start from count data, we still ask you to download (a representative part) of the fastq data to obtain a first impression of the data quality.
 
+As the files were huge for my computer to run I've only done a really small portion of it here.
+
 ```{r, echo=FALSE}
 
+htmltools::includeHTML(path="./chipseq/fastqcs/multiqc_report.html")
 ```
 
 ## Mapping statistics
@@ -232,6 +230,8 @@ When starting from the bam files, provide some mapping statistics if available (
 
 Read in your peak data (output macs2) and display the head and dimensions of your data object.
 
+I was met with errors while trying to map the data. Computer processor related errors, can be solved with the super computer. I'll try to finish a small part of it and send it to you if I can overcome this problem.
+
 ```{r}
 
 ```
@@ -241,8 +241,7 @@ Read in your peak data (output macs2) and display the head and dimensions of you
 Provide basic sample annotation, including the phenotype of interest and relevant other features (e.g. confounders). Note that this statement is not final: if during analysis you would drop or add a confounder or comparison, this is no problem. Just try do clearly define the initial goal of your analysis.
 
 
-
 ```{r}
-
-
+sraruntable <- read.csv("./chipseq/SraRunTable.txt")
+sraruntable[,c(1,17,26)]
 ```
