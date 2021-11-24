@@ -4,11 +4,11 @@ author:
 - Louis Coussement
 date: 2020-2021
 output:
-  pdf_document:
-    dev: png
-    toc: true
   html_document:
     df_print: paged
+    toc: true
+  pdf_document:
+    dev: png
     toc: true
 header-includes: \setlength{\emergencystretch}{3em}
 ---
@@ -34,24 +34,6 @@ library("biomaRt")
 library("tximport")
 library("wateRmelon")
 ```
-
-# Purpose of this overview
-
-The purpose of this overview is to present a clear and complete summary of the datasets you will be analysing for your project, which is useful to identify and solve problems early on. Moreover, part of the results can be re-used for your final report. Note that results presented here are not necessarily final: you may still opt to perform modifications to your preprocessing pipeline, design (samples included) etc without the need to update this temporary overview. 
-
-For this assignment we ask you to do the following:
-
-- Present some general info on your datasets
-- Present quality control (QC) on your raw sequencing files
-- Load in the data and present the intensity/count/pseudocount data
-
-If you prefer to align your sequencing data yourself (which is highly appreciated), you will already need to do so for this homework. However, since you already have to present QC results for the raw sequencing data, alignment is only a small additional effort (highly similar to what we performed in the practical session).
-
-In order to complete this task you can find a R markdown template via Ufora and also a filled out example (https://ufora.ugent.be/d2l/le/content/442070/Home). Note that for the filled out example datasets are not chosen around an matching topic, as should of course be the case for your project.
-
-# Project assignment
-
-You can find the project assignment via Ufora (https://ufora.ugent.be/d2l/le/content/442070/Home).
 
 # Group info
 
@@ -106,7 +88,7 @@ setwd(orig)
 
 ## Annotation
 
-Provide basic sample annotation, including the phenotype of interest and relevant other features (e.g. confounders). Note that this statement is not final: if during analysis you would drop or add a confounder or comparison, this is no problem. Just try do clearly define the initial goal of your analysis.
+6 samples are used in this data, 3 from benign cells and 3 from cancer cells. It will be used as a basis to see the differential expression between cancer cells and benign cells.
 
 
 
@@ -164,45 +146,6 @@ sdrf <- read.delim("./microarray/GEOD-71781/E-GEOD-71781.sdrf.txt")
 print(sdrf[,c("Source.Name","Comment..Sample_title.","Array.Design.REF")])
 ```
 
-# Sequencing data
-
-## General info
-
-
-
-
-## Quality control on fastQ files
-
-Add the multiqc report using `htmltools::includeHTML`. Hint: you can remove the navigation bar on the left by opening the html file > closing the bar > saving the html file. This will remove the indentation in your final html file. In case you start from count data, we still ask you to download (a representative part) of the fastq data to obtain a first impression of the data quality.
-
-```{r, echo=FALSE}
-
-```
-
-## Mapping statistics
-
-When starting from the count data, provide some mapping statistics if available (these can typically be found in the paper for which the data was originally published). If you performed the mapping yourself and saved your kallisto output as a log file, mapping statistics are typically included in your multiqc output (and can be displayed under the previous section).
-
-## (Pseudo)Count table
-
-Read in your count data or combine your kallisto output to combine your pseudocount data (via tximport) and display the head and dimensions of your count data object.
-
-```{r}
-
-```
-
-## Annotation
-
-Provide basic sample annotation, including the phenotype of interest and relevant other features (e.g. confounders). Note that this statement is not final: if during analysis you would drop or add a confounder or comparison, this is no problem. Just try do clearly define the initial goal of your analysis.
-
-
-
-
-```{r}
-
-
-```
-
 # ChIPseq data
 
 ## General info
@@ -213,7 +156,6 @@ This ChIP-seq dataset includes H3K4me2 and H3K9me2 ChIP-seq data in 4 different 
 
 ## Quality control on fastQ files
 
-Add the multiqc report using `htmltools::includeHTML`. Hint: you can remove the navigation bar on the left by opening the html file > closing the bar > saving the html file. This will remove the indentation in your final html file. In case you start from count data, we still ask you to download (a representative part) of the fastq data to obtain a first impression of the data quality.
 
 As the files were huge for my computer to run I've only done a really small portion of it here.
 
@@ -224,11 +166,9 @@ htmltools::includeHTML(path="./chipseq/fastqcs/multiqc_report.html")
 
 ## Mapping statistics
 
-When starting from the bam files, provide some mapping statistics if available (these can typically be found in the paper for which the data was originally published). If you performed the mapping yourself and saved your kallisto output as a log file, mapping statistics are typically included in your multiqc output (and can be displayed under the previous section).
+I was met with errors while trying to map the data. Computer processor related errors, can be solved with the super computer. I'll try to finish a small part of it and send it to you if I can overcome this problem.
 
 ## Peak data
-
-Read in your peak data (output macs2) and display the head and dimensions of your data object.
 
 I was met with errors while trying to map the data. Computer processor related errors, can be solved with the super computer. I'll try to finish a small part of it and send it to you if I can overcome this problem.
 
@@ -238,8 +178,8 @@ I was met with errors while trying to map the data. Computer processor related e
 
 ## Annotation
 
-Provide basic sample annotation, including the phenotype of interest and relevant other features (e.g. confounders). Note that this statement is not final: if during analysis you would drop or add a confounder or comparison, this is no problem. Just try do clearly define the initial goal of your analysis.
 
+This data is from a paper that shows a possible treatment. It will be used to see the changes between the cancer cells and LSD1 silenced cancer cells.
 
 ```{r}
 sraruntable <- read.csv("./chipseq/SraRunTable.txt")
